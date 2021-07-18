@@ -884,14 +884,14 @@ namespace Neo.VM
                     {
                         var x2 = Pop().GetBoolean();
                         var x1 = Pop().GetBoolean();
-                        Push(x1 && x2);
+                        Push(x1 & x2);
                         break;
                     }
                 case OpCode.BOOLOR:
                     {
                         var x2 = Pop().GetBoolean();
                         var x1 = Pop().GetBoolean();
-                        Push(x1 || x2);
+                        Push(x1 | x2);
                         break;
                     }
                 case OpCode.NZ:
@@ -1272,6 +1272,8 @@ namespace Neo.VM
                     {
                         VMArray x = Pop<VMArray>();
                         int index = x.Count - 1;
+                        if (index < 0)
+                            throw new InvalidOperationException($"The value {index} is out of range.");
                         Push(x[index]);
                         x.RemoveAt(index);
                         break;
